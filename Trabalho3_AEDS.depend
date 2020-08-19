@@ -1,0 +1,47 @@
+# depslib dependency file v1.0
+1530378817 source:c:\users\breno\google drive\joao\trabalho3_aeds\array.c
+	"array.h"
+
+1530378817 c:\users\breno\google drive\joao\trabalho3_aeds\array.h
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
+1530471160 source:c:\users\breno\google drive\joao\trabalho3_aeds\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<limits.h>
+	<stdio.h>
+	"sort.h"
+
+1530131661 c:\users\breno\google drive\joao\trabalho3_aeds\sort.h
+	"array.h"
+
+1530794191 source:c:\users\breno\google drive\joao\trabalho3_aeds\sort.c
+	"sort.h"
+
+1530364416 source:c:\users\joão vitor\desktop\tp3\array.c
+	"array.h"
+
+1530364416 c:\users\joão vitor\desktop\tp3\array.h
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
+1530456760 source:c:\users\joão vitor\desktop\tp3\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<limits.h>
+	<stdio.h>
+	"sort.h"
+
+1530117260 c:\users\joão vitor\desktop\tp3\sort.h
+	"array.h"
+
+1530779790 source:c:\users\joão vitor\desktop\tp3\sort.c
+	"sort.h"
+

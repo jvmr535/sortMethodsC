@@ -1,0 +1,288 @@
+#include "sort.h"
+
+void bubbleSort(TArray* pA, long long* att, long* comp){
+	TItem aux;
+	int i,j;
+	for(i = 0; i < pA->n-1; i++){
+		for(j = 1; j < pA->n-i; j++){
+			(*comp)++;
+			if(pA->item[j].key < pA->item[j-1].key){
+				(*att)+=3;
+				aux           = pA->item[j];
+				pA->item[j]   = pA->item[j-1];
+				pA->item[j-1] = aux;
+			}
+		}
+	}
+}
+
+//bubbleSort Otimizado
+void bubbleSortO(TArray* pA, long long* att, long* comp){
+	TItem aux;
+	int i =0,j,flag;
+	do{
+    (*att)++;
+    flag = 0;
+    for(j = 1; j < pA->n-i; j++){
+			(*comp)++;
+			if(pA->item[j].key < pA->item[j-1].key){
+				(*att)+=4;
+				aux           = pA->item[j];
+				pA->item[j]   = pA->item[j-1];
+				pA->item[j-1] = aux;
+                flag          = 1;
+			}
+    }
+    (*comp)++;
+    (*att)++;
+    i++;
+	}while(flag == 1);
+}
+
+void selectSort(TArray* pA,long long* att,long*comp){
+	TItem aux;
+	int i,j,min;
+	for(i = 0; i < pA->n-1; i++){
+        (*att)++;
+        min = i;
+		for(j = i+1; j < pA->n; j++){
+			(*comp)++;
+			if(pA->item[j].key < pA->item[min].key){
+				(*att)++;
+                min = j;
+			}
+		}
+        (*att)+=3;
+        aux           = pA->item[i];
+        pA->item[i]   = pA->item[min];
+        pA->item[min] = aux;
+	}
+}
+
+void selectSortO(TArray* pA,long long* att,long* comp){
+	TItem aux;
+	int i,j,min;
+	for(i = 0; i < pA->n-1; i++){
+        (*att)++;
+        min = i;
+		for(j = i+1; j < pA->n; j++){
+			(*comp)++;
+			if(pA->item[j].key < pA->item[min].key){
+				(*att)++;
+                min = j;
+			}
+		}
+		(*comp)++;
+		if(pA->item[i].key != pA->item[min].key){
+            (*att)+=3;
+            aux           = pA->item[i];
+            pA->item[i]   = pA->item[min];
+            pA->item[min] = aux;
+		}
+	}
+}
+
+void insertionSort(TArray* pA,long long* att,long* comp){
+	TItem atual;
+	int i,j;
+
+	for(i = 1; i < pA->n; i++){
+        (*att)++;
+        atual = pA->item[i];
+		for(j = i - 1; (j >= 0) &&  (atual.key < pA->item[j].key); j--){
+			(*comp)++;
+            (*att)++;
+            pA->item[j+1] = pA->item[j];
+        }
+        pA->item[j+1] = atual;
+    }
+}
+
+void insertionSortO(TArray* pA,long long* att,long* comp){
+	TItem atual;
+
+	(*att)++;
+	int i,j,min = 0;
+
+	for(i = 1; i < pA->n; i++){
+        (*comp)++;
+        if(pA->item[i].key < pA->item[min].key){
+            (*att)++;
+            min = i;
+        }
+	}
+	(*att)+=3;
+    atual           = pA->item[0];
+    pA->item[0]   = pA->item[min];
+    pA->item[min] = atual;
+
+	for(i = 1; i < pA->n; i++){
+        (*att)++;
+        atual = pA->item[i];
+		for(j = i - 1; (atual.key < pA->item[j].key); j--){
+			(*comp)++;
+            (*att)++;
+            pA->item[j+1] = pA->item[j];
+        }
+        pA->item[j+1] = atual;
+    }
+}
+
+void shellSort(TArray* pA,long long* att,long* comp){
+	int i,j,h = 1;
+	TItem aux;
+    while(h < pA->n){
+        (*att)++;
+        (*comp)++;
+        h = h*3+1;
+    }
+    while (h>1){
+        (*comp)++;
+        (*att)++;
+        h /= 3;
+        for(i = h;i < pA->n;i++){
+            (*att)+=2;
+            (*comp)++;
+            aux = pA->item[i];
+            j = i;
+
+            while(j >= h && aux.key < pA->item[j-h].key){
+                (*att)+=2;
+                (*comp)++;
+                pA->item[j] = pA->item[j-h];
+                j -= h;
+            }
+            (*att)++;
+            pA->item[j] = aux;
+        }
+    }
+}
+
+void quickSort(TArray* pA,long long* att,long* comp){
+	quick(pA,att,comp,0,pA->n);
+}
+
+void quick(TArray* pA,long long* att,long* comp, int ini, int fim){
+    int i = ini,j = fim-1;
+    TItem aux,pivo;
+    (*att)++;
+    pivo = pA->item[(ini+fim)/2];
+    while(i <= j){
+        (*comp)++;
+        while(pA->item[i].key < pivo.key && i<fim){
+            (*comp)++;
+            (*att)++;
+            i++;
+        }
+        while(pA->item[j].key > pivo.key && j>ini){
+            (*comp)++;
+            (*att)++;
+            j--;
+        }
+        if(i <= j){
+            (*comp)++;
+            (*att)+=5;
+            aux = pA->item[i];
+            pA->item[i] = pA->item[j];
+            pA->item[j] = aux;
+            i++;
+            j--;
+        }
+    }
+    (*comp)++;
+    if( j > ini){
+        quick(pA,att,comp,ini,j+1);
+    }
+    (*comp)++;
+    if(i < fim){
+        quick(pA,att,comp,i,fim);
+    }
+}
+
+void heapSort(TArray* pA,long long* att,long* comp){
+	int n = pA->n,i = n/2, pai,filho;
+	TItem aux;
+	while(1) {
+        (*comp)++;
+        if (i > 0) {
+            (*att)+=2;
+            i--;
+            aux = pA->item[i];
+        } else {
+            (*att)++;
+            n--;
+            (*comp)++;
+            if (n == 0) return;
+            (*att)+=2;
+            aux = pA->item[n];
+            pA->item[n] = pA->item[0];
+        }
+        (*att)+=2;
+        pai = i;
+        filho = i * 2 + 1;
+        while (filho < n) {
+            (*comp)++;
+            if ((filho + 1 < n)  &&  (pA->item[filho + 1].key > pA->item[filho].key))
+              filho++;
+              (*comp)++;
+            if (pA->item[filho].key > aux.key) {
+                (*att)+=3;
+                pA->item[pai] = pA->item[filho];
+                pai = filho;
+                filho = pai * 2 + 1;
+            } else {
+                break;
+            }
+        }
+        (*att)++;
+        pA->item[pai] = aux;
+   }
+}
+
+void mergeSort(TArray* pA,long long* att,long* comp){
+	mergeP(pA, att, comp, 0, pA->n);
+}
+
+void mergeAux(TArray* pA,long long* att,long* comp,int comeco, int meio, int fim){
+    int com1 = comeco, com2 = meio+1, comAux =0, tam= fim-comeco+1;
+    TArray *aux = NULL;
+    allocateArray(aux,tam);
+    while(com1 <= meio && com2 <= fim){
+        if(pA->item[com1].key < pA->item[com2].key ){
+            aux->item[comAux] =  pA->item[com1];
+            com1++;
+        }
+        else{
+            aux->item[comAux] =  pA->item[com2];
+            com2++;
+        }
+        comAux++;
+    }
+
+    while(com1 <= meio){
+        aux->item[comAux] =  pA->item[com1];
+        comAux++;
+        com1++;
+    }
+
+     while(com2 <= meio){
+        aux->item[comAux] =  pA->item[com2];
+        comAux++;
+        com2++;
+    }
+
+    for(comAux = comeco; comAux <= fim; comAux++){
+        pA->item[comAux] = aux->item[com1];
+    }
+    freeArray(aux);
+}
+
+void mergeP(TArray* pA,long long* att,long* comp,int comeco,int fim){
+    if(comeco < fim){
+        int meio = (fim+comeco)/2;
+
+        mergeP(pA, att, comp, comeco, meio);
+        mergeP(pA, att, comp, meio+1, fim);
+        mergeAux(pA, att, comp, comeco, meio, fim);
+    }
+}
